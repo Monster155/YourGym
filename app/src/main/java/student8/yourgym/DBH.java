@@ -5,7 +5,7 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBH extends SQLiteOpenHelper{
+public class DBH extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "GYM";
     public static final String TABLE_NAME = "GYM";
@@ -25,14 +25,12 @@ public class DBH extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " ( " + JYM + " DOUBLE, " + PRISED + " DOUBLE, " + TYAGA + " DOUBLE);");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE " + TABLE_NAME);
         onCreate(db);
     }

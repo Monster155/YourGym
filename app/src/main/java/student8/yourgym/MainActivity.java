@@ -1,25 +1,17 @@
 package student8.yourgym;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
+public class MainActivity extends AppCompatActivity {
 
     Button btnJ, btnP, btnT;
-    TextView tvJ, tvP, tvT;
     EditText etJ, etP, etT;
-
-    DBH dbh;
-    SQLiteDatabase db;
 
     public static final String MJ = "myJym";
     public static final String MJC = "counter";
@@ -66,9 +58,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     }
 
     public void names() {
-        dbh = new DBH(this, dbh.DATABASE_NAME, null, dbh.DATABASE_VERSION);
-        db = dbh.getWritableDatabase();
-
         mSetJ = getSharedPreferences(MJ, Context.MODE_PRIVATE);
         mSetP = getSharedPreferences(MP, Context.MODE_PRIVATE);
         mSetT = getSharedPreferences(MT, Context.MODE_PRIVATE);
@@ -76,10 +65,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         btnJ = findViewById(R.id.button);
         btnP = findViewById(R.id.button2);
         btnT = findViewById(R.id.button3);
-
-        tvJ = findViewById(R.id.textView);
-        tvP = findViewById(R.id.textView2);
-        tvT = findViewById(R.id.textView3);
 
         etJ = findViewById(R.id.editText);
         etP = findViewById(R.id.editText2);
