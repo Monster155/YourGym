@@ -1,26 +1,28 @@
 package student8.yourgym;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     Button btnJ, btnP, btnT;
     EditText etJ, etP, etT;
 
-    public static final String MJ = "myJym";
-    public static final String MJC = "counter";
-    public static final String MP = "myPrised";
-    public static final String MPC = "counter";
-    public static final String MT = "myTyaga";
-    public static final String MTC = "counter";
+    public static final String MK = "myGym";
+    public static final String MJ = "jym";
+    public static final String MP = "prised";
+    public static final String MT = "tyaga";
 
-    private SharedPreferences mSetJ, mSetP, mSetT;
+    private SharedPreferences mSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,35 +34,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 double a = Double.parseDouble(etJ.getText().toString());
-                SharedPreferences.Editor editor = mSetJ.edit();
-                editor.putFloat(MJC, (float)a);
+                SharedPreferences.Editor editor = mSet.edit();
+                editor.putFloat(MJ, (float)a);
                 editor.apply();
+                Toast toast = Toast.makeText(getApplicationContext(),"Ваш макс. жим сохранен", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
         btnP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 double a = Double.parseDouble(etP.getText().toString());
-                SharedPreferences.Editor editor = mSetP.edit();
-                editor.putFloat(MPC, (float)a);
+                SharedPreferences.Editor editor = mSet.edit();
+                editor.putFloat(MP, (float)a);
                 editor.apply();
+                Toast toast = Toast.makeText(getApplicationContext(),"Ваш макс. присед сохранен", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent i = new Intent(MainActivity.this, PrisedActivity.class);
+                startActivity(i);
             }
         });
         btnT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 double a = Double.parseDouble(etT.getText().toString());
-                SharedPreferences.Editor editor = mSetT.edit();
-                editor.putFloat(MTC, (float)a);
+                SharedPreferences.Editor editor = mSet.edit();
+                editor.putFloat(MT, (float)a);
                 editor.apply();
+                Toast toast = Toast.makeText(getApplicationContext(),"Ваша макс. тяга сохранен", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }
 
     public void names() {
-        mSetJ = getSharedPreferences(MJ, Context.MODE_PRIVATE);
-        mSetP = getSharedPreferences(MP, Context.MODE_PRIVATE);
-        mSetT = getSharedPreferences(MT, Context.MODE_PRIVATE);
+        mSet = getSharedPreferences(MK, Context.MODE_PRIVATE);
 
         btnJ = findViewById(R.id.button);
         btnP = findViewById(R.id.button2);
@@ -75,25 +83,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         // Запоминаем данные
-        SharedPreferences.Editor editorJ = mSetJ.edit();
-        editorJ.putFloat(MJC, (float) Double.parseDouble(etJ.getText().toString()));
+        SharedPreferences.Editor editorJ = mSet.edit();
+        editorJ.putFloat(MJ, (float) Double.parseDouble(etJ.getText().toString()));
         editorJ.apply();
-        SharedPreferences.Editor editorP = mSetP.edit();
-        editorP.putFloat(MPC, (float) Double.parseDouble(etP.getText().toString()));
+        SharedPreferences.Editor editorP = mSet.edit();
+        editorP.putFloat(MP, (float) Double.parseDouble(etP.getText().toString()));
         editorP.apply();
-        SharedPreferences.Editor editorT = mSetT.edit();
-        editorT.putFloat(MTC, (float) Double.parseDouble(etT.getText().toString()));
+        SharedPreferences.Editor editorT = mSet.edit();
+        editorT.putFloat(MT, (float) Double.parseDouble(etT.getText().toString()));
         editorT.apply();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mSetJ.contains(MJC))
-            etJ.setText(mSetJ.getFloat(MJC, 0)+"");
-        if (mSetP.contains(MPC))
-            etP.setText(mSetP.getFloat(MPC, 0)+"");
-        if (mSetT.contains(MTC))
-            etT.setText(mSetT.getFloat(MTC, 0)+"");
+            etJ.setText(mSet.getFloat(MJ, 0)+"");
+            etP.setText(mSet.getFloat(MP, 0)+"");
+            etT.setText(mSet.getFloat(MT, 0)+"");
     }
 }
