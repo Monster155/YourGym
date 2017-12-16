@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class PrisedActivity extends Activity {
 
     TextView tvName, tvInfo, tv[][][] = new TextView[12][8][3];
-    int temp, numOfLes = 96;
-    String tt[];
     public static final String MK = "myGym";
     public static final String MP = "prised";
     private SharedPreferences mSet;
@@ -22,6 +22,8 @@ public class PrisedActivity extends Activity {
         setContentView(R.layout.activity_prised);
         names();
         tvInfo.setText(tvInfo.getText() + (mSet.getFloat(MP, 0) + " кг жмет"));
+        tv[0][0][0].setText("0 0 0");
+        tv[0][0][1].setText("0 0 1");
     }
 
     void names(){
@@ -29,16 +31,9 @@ public class PrisedActivity extends Activity {
         tvInfo = findViewById(R.id.textViewInfo);
         mSet = getSharedPreferences(MK, Context.MODE_PRIVATE);
 
-        tt = new String[numOfLes];
-        for(int i = 0; i < numOfLes; i++)
-            tt[i] = i + "";
-        numOfLes = 0;
         for(int k = 0; k < 12; k++)
             for(int i = 0; i < 8; i++)
-                for(int j = 0; j < 3; j++){
-                    temp = getResources().getIdentifier(tt[numOfLes], "id", getPackageName());
-                    numOfLes++;
-                    tv[k][i][j] = findViewById(temp);
-                }
+                for(int j = 0; j < 3; j++)
+                    tv[k][i][j] = findViewById(R.id.textView1_1_1+i*j*k);
     }
 }
